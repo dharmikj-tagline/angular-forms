@@ -1,0 +1,66 @@
+<h1 class="text-primary text-center m-5">Template Driven Forms</h1>
+
+<div class="row">
+    <div class="col-6 p-5">
+        <form name="form" #templateForm="ngForm" (ngSubmit)="templateForm.valid && getData(templateForm.value)">
+            <div class="row mb-3">
+                <label for="name" class="col-form-label fw-bold fs-5">{{ lblFname }}</label>
+                <input type="text"  name="fname" placeholder="Enter First Name" pattern="^[a-zA-Z]+$" minlength="3"
+                    required ngModel #fname="ngModel">
+                <span *ngIf="fname.touched && !fname.valid" style="color: red;">Please Enter Valid First
+                    Name</span>
+            </div>
+            <div class="row mb-3">
+                <label for="name" class="col-form-label fw-bold fs-5">{{ lblLname }}</label>
+                <input type="text" name="lname" placeholder="Enter Last Name" pattern="^[a-zA-Z]+$" minlength="3"
+                    required ngModel #lname="ngModel">
+                <span *ngIf="lname.touched && !lname.valid" style="color: red;">Please Enter Valid Last
+                    Name</span>
+            </div>
+
+            <div class="d-flex">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" checked>
+                    <label class="form-check-label" for="male">
+                        Male
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender">
+                    <label class="form-check-label" for="female">
+                        Female
+                    </label>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="name" class="col-form-label fw-bold fs-5">{{ lblEmail }}</label>
+                <input type="email" name="email" placeholder="Enter Email" required ngModel #email="ngModel">
+                <span *ngIf="email.touched && !email.valid" style="color: red;">Please Enter Valid
+                    Email</span>
+            </div>
+            <div class="row mb-3">
+                <label for="name" class="col-form-label fw-bold fs-5">{{ lblPassword }}</label>
+                <input type="password" name="password" placeholder="Enter Password" minlength="8" required ngModel
+                    #password="ngModel">
+                <span *ngIf="password.touched && !password.valid" style="color: red;">Please Enter Valid
+                    Password</span>
+            </div>
+            <div class="mt-5">
+                <button class="btn btn-primary" name="submit" id="submit">{{lblSubmit}}</button>
+                <button class="btn btn-danger  ms-5 " name="reset" (click)="templateForm.reset()">{{lblReset}}</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-6">
+
+    </div>
+</div>
+
+
+<!-- <ul>
+    <li>First name : {{ userData.fname }}</li>
+    <li>Last Name : {{ userData.lname }}</li>
+    <li>Email : {{ userData.email }}</li>
+    <li>Password : {{ userData.password }}</li>
+</ul> -->
