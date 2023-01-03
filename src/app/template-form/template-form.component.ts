@@ -53,30 +53,15 @@ export class TemplateFormComponent implements OnInit {
     }
   ]
 
-  // showing(){
-  //   console.log('userData :>> ', this.userData);
-  //   // this.userDatas.push({
-  //   //   fname : this.userData.fname ,
-  //   //   lname : this.userData.lname ,
-  //   //   gender : this.userData.gender ,
-  //   //   email : this.userData.email ,
-  //   //   mobile : this.userData.mobile ,
-  //   // });
-  //   this.userDatas.push(this.userData);
-  //   console.log('this.userDatas :>> ', this.userDatas);
-  // }
-
   showing(templateForm:NgForm){
     console.log('userData :>> ', this.templateForm.value);
     this.userDatas.push(this.templateForm.value);
     console.log('this.templateForm.value.email :>> ', this.templateForm.value.email);
   }
 
-  deleteRec(templateForm:any){
-    for(let i=0;i<=this.userDatas.length;i++){
-      if(templateForm.email==this.userDatas.email){
-
-      }
-    }
+  deleteRec(data:any){
+    
+      this.userDatas.splice(data,1);
+    
   }
 }
