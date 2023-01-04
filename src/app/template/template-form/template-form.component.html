@@ -20,19 +20,20 @@
             </div>
 
             <div class="d-flex">
-                <div class="form-check">
+                <label for="name" class="col-form-label fw-bold fs-5 col-2 my-3">Gender :</label>
+                <div class="form-check my-3">
                     <a>
                         <input class="form-check-input" type="radio" name="gender" value="male" required ngModel
-                            #gender="ngModel" id="gender">
+                            #gender="ngModel" id="male">
                         <label class="form-check-label" for="male">
                             Male
                         </label>
                     </a>
                 </div>
-                <div class="form-check">
+                <div class="form-check my-3">
                     <a>
                         <input class="form-check-input" type="radio" name="gender" value="female" required ngModel
-                            #gender="ngModel" id="gender">
+                            #gender="ngModel" id="female">
                         <label class="form-check-label" for="female">
                             Female
                         </label>
@@ -41,9 +42,11 @@
                 <span *ngIf="gender.touched && !gender.valid" style="color: red;">Please Checked Gender</span>
             </div>
 
+            
+
             <div class="row mb-3">
                 <label for="name" class="col-form-label fw-bold fs-5">{{ lblEmail }}</label>
-                <input type="email" name="email" id="email" placeholder="Enter Email" required ngModel #email="ngModel">
+                <input type="email" name="email" id="email" placeholder="Enter Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required ngModel #email="ngModel" >
                 <span *ngIf="email.touched && !email.valid" style="color: red;">Please Enter Valid
                     Email</span>
             </div>
@@ -54,12 +57,12 @@
                 <span *ngIf="mobile.touched && !mobile.valid" style="color: red;">Please Enter Valid
                     Mobile no.</span>
             </div>
+            
             <div class="mt-5">
                 <button class="btn btn-primary" name="submit" id="submit"
-                    (click)="showing(templateForm.value)">{{lblSubmit}}</button>
-                <button class="btn btn-danger ms-5 " name="reset" id="reset"
-                    (click)="templateForm.reset()">{{lblReset}}</button>
+                (click)="showing()">{{lblSubmit}}</button>                
             </div>
+            <span style="color: red;">{{ formErr }}</span>
         </form>
     </div>
     <div class="col-6 p-5">
