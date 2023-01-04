@@ -1,55 +1,64 @@
 <h1 class="text-primary text-center m-5">Template Driven Forms</h1>
 
+
 <div class="row">
     <div class="col-6 p-5">
-        <form name="form" #templateForm="ngForm" (ngSubmit)="templateForm.valid && getData(templateForm.value)">
+        <form name="form" #templateForm="ngForm">
             <div class="row mb-3">
                 <label for="name" class="col-form-label fw-bold fs-5">{{ lblFname }}</label>
-                <input type="text"  name="fname" placeholder="Enter First Name" pattern="^[a-zA-Z]+$" minlength="3"
-                    required ngModel #fname="ngModel">
+                <input type="text" name="fname" id="fname" placeholder="Enter First Name" pattern="^[a-zA-Z]+$"
+                    minlength="3" required ngModel #fname="ngModel">
                 <span *ngIf="fname.touched && !fname.valid" style="color: red;">Please Enter Valid First
                     Name</span>
             </div>
             <div class="row mb-3">
                 <label for="name" class="col-form-label fw-bold fs-5">{{ lblLname }}</label>
-                <input type="text" name="lname" placeholder="Enter Last Name" pattern="^[a-zA-Z]+$" minlength="3"
-                    required ngModel #lname="ngModel">
+                <input type="text" name="lname" id="lname" placeholder="Enter Last Name" pattern="^[a-zA-Z]+$"
+                    minlength="3" required ngModel #lname="ngModel">
                 <span *ngIf="lname.touched && !lname.valid" style="color: red;">Please Enter Valid Last
                     Name</span>
             </div>
 
             <div class="d-flex">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gender" value="male" required ngModel #gender="ngModel">
-                    <label class="form-check-label" for="male">
-                        Male
-                    </label>
+                    <a>
+                        <input class="form-check-input" type="radio" name="gender" value="male" required ngModel
+                            #gender="ngModel" id="gender">
+                        <label class="form-check-label" for="male">
+                            Male
+                        </label>
+                    </a>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gender" value="female" required ngModel #gender="ngModel">
-                    <label class="form-check-label" for="female">
-                        Female
-                    </label>
+                    <a>
+                        <input class="form-check-input" type="radio" name="gender" value="female" required ngModel
+                            #gender="ngModel" id="gender">
+                        <label class="form-check-label" for="female">
+                            Female
+                        </label>
+                    </a>
                 </div>
-                <span *ngIf="gender.touched && !gender.valid" style="color: red;">Please Please Checked Gender</span>
+                <span *ngIf="gender.touched && !gender.valid" style="color: red;">Please Checked Gender</span>
             </div>
 
             <div class="row mb-3">
                 <label for="name" class="col-form-label fw-bold fs-5">{{ lblEmail }}</label>
-                <input type="email" name="email" placeholder="Enter Email" required ngModel #email="ngModel">
+                <input type="email" name="email" id="email" placeholder="Enter Email" required ngModel #email="ngModel">
                 <span *ngIf="email.touched && !email.valid" style="color: red;">Please Enter Valid
                     Email</span>
             </div>
             <div class="row mb-3">
                 <label for="name" class="col-form-label fw-bold fs-5">{{ lblMobile }}</label>
-                <input type="text" name="mobile" placeholder="Enter Mobile No" minlength="10" maxlength="10" pattern="^[0-9]+$" required ngModel
-                    #mobile="ngModel">
+                <input type="text" name="mobile" id="mobile" placeholder="Enter Mobile No" minlength="10" maxlength="10"
+                    pattern="^[0-9]+$" required ngModel #mobile="ngModel" id="mobile" (keydown)="noalphabet($event)">
                 <span *ngIf="mobile.touched && !mobile.valid" style="color: red;">Please Enter Valid
                     Mobile no.</span>
             </div>
             <div class="mt-5">
-                <button class="btn btn-primary" name="submit" id="submit" (click)="showing(templateForm.value)">{{lblSubmit}}</button>
-                <button class="btn btn-danger ms-5 " name="reset" (click)="templateForm.reset()">{{lblReset}}</button>
+                <button class="btn btn-primary" name="submit" id="submit"
+                    (click)="showing(templateForm.value)">{{lblSubmit}}</button>
+                <button class="btn btn-danger ms-5 " name="reset" id="reset"
+                    (click)="templateForm.reset()">{{lblReset}}</button>
             </div>
         </form>
     </div>
@@ -70,14 +79,16 @@
                 <tr *ngFor="let data of userDatas ;let i=index">
                     <td>{{i+1}}</td>
                     <td>{{ data.fname }}</td>
-                    <td>{{ data.lname }}</td> 
+                    <td>{{ data.lname }}</td>
                     <td>{{ data.gender }}</td>
                     <td>{{ data.email }}</td>
                     <td>{{ data.mobile }}</td>
-                    <td><button class="btn btn-outline-secondary">Edit</button></td>
+                    <td><button class="btn btn-outline-secondary" (click)="pushData(data)">Edit</button></td>
                     <td><button class="btn btn-outline-danger" (click)="deleteRec(data)">Delete</button></td>
                 </tr>
+                <tr class="text-center fw-bold fs-5 pt-1" *ngIf="this.userDatas.length == 0">No Records Found</tr>
             </tbody>
         </table>
     </div>
 </div>
+<router-outlet></router-outlet>
