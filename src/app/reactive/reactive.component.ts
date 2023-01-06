@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { UserData } from '../common';
 
 @Component({
   selector: 'app-reactive',
@@ -17,7 +19,7 @@ export class ReactiveComponent implements OnInit {
   lblEmail : string = 'Email : ';
   lblPassword: string = 'Password : ';
   lblSubmit : string = 'Submit';
-  userData : any;
+  userData!: any;
 
   reactiveForm = new FormGroup({
     fname : new FormControl(''),
@@ -29,6 +31,5 @@ export class ReactiveComponent implements OnInit {
   showData(){
     this.userData=this.reactiveForm.value;
   }
-
 
 }

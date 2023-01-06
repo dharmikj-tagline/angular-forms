@@ -1,1 +1,32 @@
-<p>reactive works!</p>
+<h1 class="text-primary text-center m-5">Reactive Forms</h1>
+
+<div class="form1 container">
+    <form name="form" [formGroup]="reactiveForm" (ngSubmit)="showData()">
+        <div class="row mb-3">
+            <label for="name" class="col-sm-2 col-form-label fw-bold fs-5">{{ lblFname }}</label>
+            <input type="text" name="fname" class="col-sm-8" placeholder="Enter First Name"  required formControlName="fname">
+        </div>
+        <div class="row mb-3">
+            <label for="name" class="col-sm-2 col-form-label fw-bold fs-5">{{ lblLname }}</label>
+            <input type="text" name="lname" class="col-sm-8" placeholder="Enter Last Name"  required  formControlName="lname">
+        </div>
+        <div class="row mb-3">
+            <label for="name" class="col-sm-2 col-form-label fw-bold fs-5">{{ lblEmail }}</label>
+            <input type="email" name="email" class="col-sm-8" placeholder="Enter Email" required  formControlName="email">
+        </div>
+        <div class="row mb-3">
+            <label for="name" class="col-sm-2 col-form-label fw-bold fs-5">{{ lblPassword }}</label>
+            <input type="password" name="password" class="col-sm-8" placeholder="Enter Password"  required  formControlName="password">
+        </div>
+        <div class="mt-5">
+            <button class="btn btn-primary" name="submit" id="submit">{{lblSubmit}}</button>
+        </div>
+    </form>
+</div>
+
+<ul>
+    <li>First name : {{ userData.fname }}</li>
+    <li>Last Name : {{ userData.lname }}</li>
+    <li>Email : {{ userData.email }}</li>
+    <li>Password : {{ userData.password }}</li>
+</ul>
