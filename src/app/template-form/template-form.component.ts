@@ -1,22 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-
-// interface UserData {
-//   id: number;
-//   fname: string;
-//   lname: string;
-//   gender: string;
-//   email: string;
-//   mobile: string;
-//   address : Address
-// }
-
-// interface Address{
-//   country : string ,
-//   state : string ,
-//   city : string ,
-// }
+import {
+  City,
+  Country,
+  CountryList,
+  State,
+  StateFinds,
+  UserData,
+} from '../common';
 
 @Component({
   selector: 'app-template-form',
@@ -24,12 +16,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./template-form.component.scss'],
 })
 export class TemplateFormComponent implements OnInit {
-  @ViewChild('templateForm')
-  templateForm!: NgForm | any;
-  userId!: number;
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
+
+  @ViewChild('templateForm')
+  templateForm!: NgForm | any;
+  userId!: number;
 
   lblFname: string = 'First Name :';
   lblLname: string = 'Last Name :';
@@ -43,7 +36,80 @@ export class TemplateFormComponent implements OnInit {
   lblReset: string = 'Reset';
   formErr: string = '';
 
-  userDatas: any = [
+  states: any = [];
+  cities!: any;
+
+  // countryList: CountryList[]= [
+  //   {
+  //     name: 'India',
+  //     state: ['Gujrat', 'Maharashtra', 'Kolkata', 'Banglore', 'Delhi'],
+  //   },
+  //   {
+  //     name: 'Germany',
+  //     state: ['Duesseldorf', 'Leinfelden-Echterdingen', 'Eschborn'],
+  //   },
+  //   {
+  //     name: 'Spain',
+  //     state: ['Barcelona', 'Madrid'],
+  //   },
+  //   {
+  //     name: 'USA',
+  //     state: ['Downers Grove', 'New York'],
+  //   },
+  // ];
+
+  // stateFinds: StateFinds[] = [
+  //   {
+  //     name: 'Gujrat',
+  //     city: ['Surat', 'Rajkot', 'Ahmdabad'],
+  //   },
+  //   {
+  //     name: 'Maharashtra',
+  //     city: ['Mumbai', 'Thana'],
+  //   },
+  //   {
+  //     name: 'Kolkata',
+  //     city: ['KolkataCity1', 'KolkataCity2'],
+  //   },
+  //   {
+  //     name: 'Banglore',
+  //     city: ['Bang', 'Luru'],
+  //   },
+  //   {
+  //     name: 'Delhi',
+  //     city: ['New Delhi', 'Old Delhi'],
+  //   },
+  //   {
+  //     name: 'Duesseldorf',
+  //     city: ['Duessel', 'dorf'],
+  //   },
+  //   {
+  //     name: 'Leinfelden-Echterdingen',
+  //     city: ['Leinfelden', 'Echterdingen'],
+  //   },
+  //   {
+  //     name: 'Eschborn',
+  //     city: ['Esch', 'born'],
+  //   },
+  //   {
+  //     name: 'Barcelona',
+  //     city: ['Barce', 'lona'],
+  //   },
+  //   {
+  //     name: 'Madrid',
+  //     city: ['MadCity1', 'MadCity2'],
+  //   },
+  //   {
+  //     name: 'Downers Grove',
+  //     city: ['Downers', 'Grove'],
+  //   },
+  //   {
+  //     name: 'New York',
+  //     city: ['New', 'York'],
+  //   },
+  // ];
+
+  userDatas: UserData[] = [
     {
       id: 1,
       fname: 'Dharmik',
@@ -72,49 +138,36 @@ export class TemplateFormComponent implements OnInit {
     },
   ];
 
-  // country!: string;
-  // states!: string;
-  // stateSelect!: string[];
-  // citySelect!: string[];
-  // string: any = '';
+  countryy: Country[] = [
+    { id: 1, name: 'India' },
+    { id: 2, name: 'USA' },
+    { id: 3, name: 'Germany' },
+  ];
 
-  // populate() {
-  //   this.country = (
-  //     document.getElementById('country') as HTMLSelectElement
-  //   ).value;
+  state: State[] = [
+    { id: 1, name: 'Gujarat', country: 1 },
+    { id: 2, name: 'Maharastra', country: 1 },
+    { id: 3, name: 'Downers Grove', country: 2 },
+    { id: 4, name: 'New York', country: 2 },
+    { id: 5, name: 'Duesseldorf', country: 3 },
+    { id: 6, name: 'Estanguis', country: 3 },
+  ];
 
-  //   if (this.country == 'India') {
-  //     this.stateSelect = ['Gujrat', 'Maharashtra', 'Delhi'];
-  //   } else if (this.country == 'US') {
-  //     this.stateSelect = ['New York', 'Chicago'];
-  //   } else {
-  //     this.stateSelect = [];
-  //   }
-
-  //   for (let i = 0; i < this.stateSelect.length; i++) {
-  //     this.string =
-  //       this.string + '<option>' + this.stateSelect[i] + '</option>';
-  //   }
-
-  //   (document.getElementById('state') as HTMLSelectElement).innerHTML =
-  //     '<select>' + this.string + '</select>';
-  //   this.states = (document.getElementById('state') as HTMLSelectElement).value;
-
-  //   if (this.states == 'Gujrat') {
-  //     this.citySelect = ['Surat', 'Ahmdabad'];
-  //   } else if (this.states == 'Maharashtra') {
-  //     this.citySelect = ['mumbai', 'bandra'];
-  //   } else {
-  //     this.citySelect = [];
-  //   }
-
-  //   for (let i = 0; i < this.citySelect.length; i++) {
-  //     this.string =
-  //       this.string + '<option>' + this.stateSelect[i] + '</option>';
-  //   }
-  //   (document.getElementById('city') as HTMLSelectElement).innerHTML =
-  //     '<select>' + this.string + '</select>';
-  // }
+  city: City[] = [
+    { id: 1, name: 'Ahmedabad', state: 1 },
+    { id: 2, name: 'Rajkot', state: 1 },
+    { id: 3, name: 'Gandhinagar', state: 1 },
+    { id: 4, name: 'Mumbai', state: 2 },
+    { id: 5, name: 'Pune', state: 2 },
+    { id: 6, name: 'Downers', state: 3 },
+    { id: 7, name: 'Grove', state: 3 },
+    { id: 8, name: 'New', state: 4 },
+    { id: 9, name: 'York', state: 4 },
+    { id: 10, name: 'Duessel', state: 5 },
+    { id: 11, name: 'dorf', state: 5 },
+    { id: 12, name: 'Estan', state: 6 },
+    { id: 13, name: 'guis', state: 6 },
+  ];
 
   showing() {
     if (this.templateForm.invalid) {
@@ -144,6 +197,7 @@ export class TemplateFormComponent implements OnInit {
       this.userId = 0;
       this.templateForm.reset();
       console.log(this.userDatas);
+      console.log(this.templateForm);
     }
   }
 
@@ -151,7 +205,7 @@ export class TemplateFormComponent implements OnInit {
     this.userDatas.splice(data, 1);
   }
 
-  pushData(data: any) {
+  pushData(data: UserData) {
     this.lblSubmit = 'Update';
     this.userId = data.id;
     // this.templateForm.setValue({
@@ -164,6 +218,7 @@ export class TemplateFormComponent implements OnInit {
 
     this.templateForm.form.patchValue(data);
     console.log(this.templateForm);
+    console.log('data :>> ', data);
   }
 
   noalphabet(evet: any): void {
@@ -172,55 +227,32 @@ export class TemplateFormComponent implements OnInit {
     }
   }
 
-  countryList: Array<any> = [
-    {
-      name: 'India',
-      stat: ['Gujrat', 'Maharashtra', 'Kolkata', 'Banglore', 'Delhi'],
-    },
-    {
-      name: 'Germany',
-      stat: ['Duesseldorf', 'Leinfelden-Echterdingen', 'Eschborn'],
-    },
-    {
-      name: 'Spain',
-      stat: ['Barcelona', 'Madrid'],
-    },
-    {
-      name: 'USA',
-      stat: ['Downers Grove', 'New York'],
-    },
-  ];
-
-  stateFinds: Array<any> = [
-    { name: 'Gujrat', city: ['Surat', 'Rajkot', 'Ahmdabad'] },
-    { name: 'Maharashtra', city: ['Mumbai', 'Thana'] },
-    { name: 'Kolkata', city: ['KolkataCity1', 'KolkataCity2'] },
-    { name: 'Banglore', city: ['Bang', 'Luru'] },
-    { name: 'Delhi', city: ['New Delhi', 'Old Delhi'] },
-    { name: 'Duesseldorf', city: ['Duessel', 'dorf'] },
-    { name: 'Leinfelden-Echterdingen', city: ['Leinfelden', 'Echterdingen'] },
-    { name: 'Eschborn', city: ['Esch', 'born'] },
-    { name: 'Barcelona', city: ['Barce', 'lona'] },
-    { name: 'Madrid', city: ['MadCity1', 'MadCity2'] },
-    { name: 'Downers Grove', city: ['Downers', 'Grove'] },
-    { name: 'New York', city: ['New', 'York'] },
-  ];
-
-  stat: any;
   changeCountry(count: any) {
-    console.log(count.target.value);
-    this.stat = this.countryList.find(
-      (con) => con.name == count.target.value
-    ).stat;
-    console.log(this.stat);
+    // console.log(count.target.value);
+    // this.state = this.countryList.find(
+    //   (con) => con.name == count.target.value
+    // ).stat;
+    console.log(this.state);
+    this.states = this.state.filter(
+      (con: any) => con.country == count.target.value
+    );
+    // this.state.find((con:any)=>{
+    //   if(con.country == count.target.value){
+    //     this.states=con.name;
+    //   }
+    // })
+    console.log('States data', this.states);
   }
 
-  cities: any;
   changeState(count: any) {
-    console.log(count.target.value);
-    this.cities = this.stateFinds.find(
-      (con : any) => con.name == count.target.value
-    ).city;
+    // console.log(count.target.value);
+    // this.cities = this.stateFinds.find(
+    //   (con) => con.name == count.target.value
+    // ).city;
+    // console.log(this.cities);
+    this.cities = this.city.filter(
+      (con: any) => con.state == count.target.value
+    );
     console.log(this.cities);
   }
 }
