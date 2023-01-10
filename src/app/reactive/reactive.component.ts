@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CountryList, StateFinds } from '../common';
+import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { CountryList, StateFinds, UserData } from '../common';
 
 @Component({
   selector: 'app-reactive',
@@ -8,21 +8,42 @@ import { CountryList, StateFinds } from '../common';
   styleUrls: ['./reactive.component.scss'],
 })
 export class ReactiveComponent implements OnInit {
-  constructor(private fb: FormBuilder) {}
 
-  ngOnInit(): void { }
-
+  reactiveForm!: FormGroup;
   lblFname: string = 'First Name : ';
   lblLname: string = 'Last Name :';
   lblGender: string = 'Gender : ';
   lblCountry: string = 'Country : ';
   lblState: string = 'State : ';
   lblCity: string = 'City : ';
+  lblDate : string = 'Birth Date :';
   lblEmail: string = 'Email : ';
   lblMobile: string = 'Mobile : ';
   lblSubmit: string = 'Submit';
+  states!: string[];
+  cities!: string[];
+  userId!: number;
   
+  constructor(private fb: FormBuilder) { }
 
+  ngOnInit(): void {
+    this.reactiveForm = this.fb.group({
+      fname: ['', Validators.required],
+      lname: ['', Validators.required],
+      gender: ['', Validators.required],
+      address: this.fb.group({
+        country: [''],
+        state: [''],
+        city: [''],
+      }),
+      date: ['', Validators.required],
+      email: ['', Validators.required],
+      mobile: ['', Validators.required],
+      checkbox: ['', Validators.requiredTrue],
+    });
+  }
+
+  
   userDatas: any = [
     {
       id: 1,
@@ -31,11 +52,12 @@ export class ReactiveComponent implements OnInit {
       gender: 'male',
       email: 'dharmikj.tagline@gmail.com',
       mobile: '1234567890',
+      date : '2003-02-25',
       address: {
         country: 'India',
         state: 'Gujrat',
         city: 'Surat',
-      }
+      },
     },
     {
       id: 2,
@@ -44,6 +66,7 @@ export class ReactiveComponent implements OnInit {
       gender: 'male',
       email: 'pratikg.tagline@gmail.com',
       mobile: '8765467890',
+      date : '2020-01-11',
       address: {
         country: 'USA',
         state: 'New York',
@@ -51,20 +74,6 @@ export class ReactiveComponent implements OnInit {
       },
     },
   ];
-
-  reactiveForm = this.fb.group({
-    fname: ['',Validators.required],
-    lname: ['',Validators.required],
-    gender: ['',Validators.required],
-    address: this.fb.group({
-      country: [''],
-      state: [''],
-      city: ['']
-    }),
-    email : ['',Validators.required],
-    mobile : ['',Validators.required],
-    
-  });
 
   // reactiveForm = new FormGroup({
   //   fname: new FormControl('', [
@@ -95,11 +104,7 @@ export class ReactiveComponent implements OnInit {
   //   ]),
   // });
 
-
-  states: any;
-  cities: any;
-  userId!: number;
-
+  
   countryList: any = [
     {
       name: 'India',
@@ -119,7 +124,7 @@ export class ReactiveComponent implements OnInit {
     },
   ];
 
-  stateFinds: any= [
+  stateFinds: any = [
     {
       name: 'Gujrat',
       city: ['Surat', 'Rajkot', 'Ahmdabad'],
@@ -170,8 +175,7 @@ export class ReactiveComponent implements OnInit {
     },
   ];
 
- 
-  showData() {
+  showData(){
     if (this.reactiveForm.invalid) {
       return;
     } else {
@@ -179,11 +183,12 @@ export class ReactiveComponent implements OnInit {
 
       if (this.userId) {
         const index: number = this.userDatas.findIndex(
-          (res: any) => res.id === this.userId
+          (res: UserData) => res.id === this.userId
         );
         this.userDatas[index] = {
           ...this.reactiveForm.value,
         };
+        console.log('Updated Data ', this.userDatas);
       } else {
         const data = {
           id: this.userDatas.length + 1,
@@ -191,6 +196,7 @@ export class ReactiveComponent implements OnInit {
         };
 
         this.userDatas.push(data);
+        console.log("Created Data ",this.userDatas);
       }
       console.log(this.userDatas);
       this.userId = 0;
@@ -200,12 +206,16 @@ export class ReactiveComponent implements OnInit {
     }
   }
 
-  get fname() {
+  get fname(){
     return this.reactiveForm.get('fname');
   }
 
   get lname() {
     return this.reactiveForm.get('lname');
+  }
+
+  get gender() {
+    return this.reactiveForm.get('gender');
   }
 
   get country() {
@@ -220,8 +230,8 @@ export class ReactiveComponent implements OnInit {
     return this.reactiveForm.get('address.city');
   }
 
-  get gender() {
-    return this.reactiveForm.get('gender');
+  get date() {
+    return this.reactiveForm.get('date');
   }
 
   get email() {
@@ -232,30 +242,34 @@ export class ReactiveComponent implements OnInit {
     return this.reactiveForm.get('mobile');
   }
 
-  changeCountry(count: any) {
+  get checkbox() {
+    return this.reactiveForm.get('checkbox');
+  }
+
+  changeCountry(count: any) : void {
     console.log(count.target.value);
     this.states = this.countryList.find(
-      (con: any) => con.name == count.target.value
+      (con: CountryList) => con.name == count.target.value
     ).state;
 
     console.log('States data', this.states);
   }
 
-  changeState(count: any) {
+  changeState(count: any) :void {
     console.log(count.target.value);
     this.cities = this.stateFinds.find(
-      (con: any) => con.name == count.target.value
+      (con: StateFinds) => con.name == count.target.value
     ).city;
     console.log(this.cities);
 
     console.log('Citys data', this.cities);
   }
 
-  deleteRec(i: number) {
+  deleteRec(i: number) : void {
     this.userDatas.splice(i, 1);
   }
 
-  pushData(data: any) {
+  pushData(data: any) : void {
     this.lblSubmit = 'Update';
     this.userId = data.id;
     console.log('data :>> ', data);
@@ -279,4 +293,6 @@ export class ReactiveComponent implements OnInit {
   //   this.email?.setValue('dharmik@gmail.com');
   //   this.mobile?.setValue('8899007766');
   // }
+
+
 }

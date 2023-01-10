@@ -1,168 +1,195 @@
-<h1 class="text-primary text-center m-5">Reactive Forms</h1>
-<div class="form1 container">
-    <form name="form" [formGroup]="reactiveForm" (ngSubmit)="showData()">
-        <div class="row mb-3">
-            <label for="name" class="col-sm-2 col-form-label fw-bold fs-5">{{ lblFname }}</label>
-            <input type="text" name="fname" class="col-sm-8" placeholder="Enter First Name" required minlength="2" pattern="^[a-zA-Z]+$"
-                formControlName="fname" />
-            <span *ngIf="fname && fname.touched && fname.invalid" style="color: red;margin-left: 16%;">Please Enter
-                Valid First Name</span>
-        </div>
-        <div class="row mb-3">
-            <label for="name" class="col-sm-2 col-form-label fw-bold fs-5">{{lblLname}}</label>
-            <input type="text" name="lname" class="col-sm-8" placeholder="Enter Last Name" required minlength="2" pattern="^[a-zA-Z]+$"
-                formControlName="lname" />
-            <span *ngIf="lname && lname.touched && lname.invalid" style="color: red; margin-left: 16%">Please Enter
-                Valid Last Name</span>
-        </div>
-
-        <div class="d-flex">
-            <label for="gender" class="col-form-label fw-bold fs-5 col-2">Gender :</label>
-            <div class="form-check my-3">
-                <a>
-                    <input class="form-check-input" type="radio" name="gender" value="male" required id="male"
-                        formControlName="gender" />
-                    <label class="form-check-label me-3" for="male">Male</label>
-                </a>
+<h1 class="text-primary text-center m-3">Reactive Forms</h1>
+<div class="row">
+    <div class=" col-5 p-4">
+        <form name="form" [formGroup]="reactiveForm" (ngSubmit)="showData()">
+            <div class="row mb-3">
+                <label for="name" class="col-3 col-form-label fw-bold fs-5">{{ lblFname }}</label>
+                <input type="text" name="fname" class="col-sm-8" placeholder="Enter First Name" required minlength="2"
+                    pattern="^[a-zA-Z]+$" formControlName="fname" />
+                <span *ngIf="fname && fname.touched && fname.invalid" style="color: red;margin-left: 23%;">Please Enter
+                    Valid First Name</span>
+                    
             </div>
-            <div class="form-check my-3">
-                <a>
-                    <input class="form-check-input" type="radio" name="gender" value="female" required id="female"
-                        formControlName="gender" />
-                    <label class="form-check-label" for="female">Female</label>
-                </a>
+            <div class="row mb-3">
+                <label for="name" class="col-3 col-form-label fw-bold fs-5">{{lblLname}}</label>
+                <input type="text" name="lname" class="col-sm-8" placeholder="Enter Last Name" required minlength="2"
+                    pattern="^[a-zA-Z]+$" formControlName="lname" />
+                <span *ngIf="lname && lname.touched && lname.invalid" style="color: red; margin-left: 23%">Please Enter
+                    Valid Last Name</span>
             </div>
-        </div>
-        <span *ngIf="gender && gender.touched && gender.invalid" style="color: red; margin-left: 16%">Please Checked
-            Gender</span>
 
-        <div formGroupName="address">
-            <h2 style="margin: 20px 30px">Address :</h2>
-            <div class="row mb-3 d-flex">
-                <label for="name" class="col-form-label fw-bold fs-5 col-2">{{
-                    lblCountry
+            <div class="d-flex">
+                <label for="gender" class="col-form-label fw-bold fs-5 col-3">Gender :</label>
+                <div class="form-check my-3">
+                    <a>
+                        <input class="form-check-input" type="radio" name="gender" value="male" required id="male"
+                            formControlName="gender" />
+                        <label class="form-check-label me-3" for="male">Male</label>
+                    </a>
+                </div>
+                <div class="form-check my-3">
+                    <a>
+                        <input class="form-check-input" type="radio" name="gender" value="female" required id="female"
+                            formControlName="gender" />
+                        <label class="form-check-label" for="female">Female</label>
+                    </a>
+                </div>
+            </div>
+            <span *ngIf="gender && gender.touched && gender.invalid" style="color: red; margin-left: 23%">Please Checked
+                Gender</span>
+
+            <div formGroupName="address">
+                <div class="row mb-3 d-flex">
+                    <label for="name" class="col-form-label fw-bold fs-5 col-3">{{
+                        lblCountry
+                        }}</label>
+                    <select class="form-select col-8" aria-label="Default select example" name="country" id="country"
+                        class="col-8" formControlName="country" (change)="changeCountry($event)">
+                        <option selected>Select Your Country</option>
+                        <option *ngFor="let country of countryList">
+                            {{ country.name }}
+                        </option>
+                    </select>
+
+                    <span *ngIf="country && country.touched && country.pristine"
+                        style="color: red; margin-left: 23%">Please
+                        Select Country</span>
+                </div>
+
+                <div class="row mb-3 d-flex">
+                    <label for="name" class="col-form-label fw-bold fs-5 col-3">{{
+                        lblState
+                        }}</label>
+                    <select placeholder="Phantasyland" class="form-select col-8" aria-label="Default select example"
+                        name="state" id="state" class="col-8" required formControlName="state"
+                        (change)="changeState($event)">
+                        <option selected>Select Your State</option>
+
+                        <option *ngFor="let state of states">{{ state }}</option>
+                    </select>
+
+                    <span *ngIf="state && state.touched && state.pristine" style="color: red; margin-left: 23%">Please
+                        Select State</span>
+                    <span *ngIf="state && country && country.untouched && state.touched"
+                        style="color: red; margin-left: 23%">Please Select Country First
+                    </span>
+                </div>
+
+                <div class="row mb-3 d-flex">
+                    <label for="name" class="col-form-label fw-bold fs-5 col-3">{{
+                        lblCity
+                        }}</label>
+                    <select placeholder="Phantasyland" class="form-select col-8" aria-label="Default select example"
+                        name="city" id="city" class="col-8" required formControlName="city">
+                        <option selected>Select Your City</option>
+
+                        <option *ngFor="let city of cities">{{ city }}</option>
+                    </select>
+
+                    <span *ngIf="city && city.touched && city.pristine" style="color: red; margin-left: 23%">Please
+                        Select
+                        City</span>
+                    <span *ngIf="city && country && state && (country.untouched || state.untouched) && city.touched"
+                        style="color: red; margin-left: 23%">Please Select Country & State First
+                    </span>
+                </div>
+            </div>
+
+
+            <div class="row mb-3">
+                <label for="date" class="col-3 col-form-label fw-bold fs-5">{{lblDate}}</label>
+                <input type="date" name="date" class="col-sm-8" placeholder="Select Date" required formControlName="date">
+                <span *ngIf="date && date.touched && date.pristine" style="color: red; margin-left: 23%">Please Select Date</span>
+            </div>
+
+            <div class="row mb-3">
+                <label for="name" class="col-3 col-form-label fw-bold fs-5">{{
+                    lblEmail
                     }}</label>
-                <select class="form-select col-8" aria-label="Default select example" name="country" id="country"
-                    class="col-8" formControlName="country" (change)="changeCountry($event)">
-                    <option selected>Select Your Country</option>
-                    <option *ngFor="let country of countryList">
-                        {{ country.name }}
-                    </option>
-                </select>
-
-                <span *ngIf="country && country.touched && country.pristine" style="color: red; margin-left: 16%">Please
-                    Select Country</span>
+                <input type="email" name="email" class="col-sm-8" placeholder="Enter Email" required
+                    formControlName="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$" />
+                <span *ngIf="email && email.touched && email.invalid" style="color: red; margin-left: 23%">Please Enter
+                    Valid Email</span>
             </div>
-
-            <div class="row mb-3 d-flex">
-                <label for="name" class="col-form-label fw-bold fs-5 col-2">{{
-                    lblState
+            <div class="row mb-3">
+                <label for="name" class="col-3 col-form-label fw-bold fs-5">{{
+                    lblMobile
                     }}</label>
-                <select placeholder="Phantasyland" class="form-select col-8" aria-label="Default select example"
-                    name="state" id="state" class="col-8" required formControlName="state"
-                    (change)="changeState($event)">
-                    <option selected>Select Your State</option>
-
-                    <option *ngFor="let state of states">{{ state }}</option>
-                </select>
-
-                <span *ngIf="state && state.touched && state.pristine" style="color: red; margin-left: 16%">Please
-                    Select State</span>
-                <span *ngIf="state && country && country.untouched && state.touched"
-                    style="color: red; margin-left: 16%">Please Select Country First
-                </span>
+                <input type="text" name="mobile" class="col-sm-8" placeholder="Enter Mobile" required pattern="^[0-9]+$"
+                    formControlName="mobile" (keydown)="noalphabet($event)" maxlength="10" minlength="10" />
+                <span *ngIf="mobile && mobile.touched && mobile.invalid" style="color: red; margin-left: 23%">Please
+                    Enter
+                    Valid Mobile no.</span>
             </div>
 
-            <div class="row mb-3 d-flex">
-                <label for="name" class="col-form-label fw-bold fs-5 col-2">{{
-                    lblCity
-                    }}</label>
-                <select placeholder="Phantasyland" class="form-select col-8" aria-label="Default select example"
-                    name="city" id="city" class="col-8" required formControlName="city">
-                    <option selected>Select Your City</option>
-
-                    <option *ngFor="let city of cities">{{ city }}</option>
-                </select>
-
-                <span *ngIf="city && city.touched && city.pristine" style="color: red; margin-left: 16%">Please Select
-                    City</span>
-                <span *ngIf="city && country && state && (country.untouched || state.untouched) && city.touched"
-                    style="color: red; margin-left: 16%">Please Select Country & State First
-                </span>
+            <div class="form-check row d-flex m-5">
+                <input type="checkbox" name="checks" id="" class="col-1" name="checkbox" id="checkboxAgree"
+                    formControlName="checkbox" style="color: black;width: 15px;">
+                <label class="form-check-label" class="col-8" for="checkboxAgree">
+                    I agree to <a href="">Terms & Condition</a>
+                </label>
+                <span *ngIf="checkbox?.invalid && checkbox?.touched" style="color: red;">Please Checked Checkbox for
+                    accept Terms & Condition</span>
             </div>
-        </div>
 
-        <div class="row mb-3">
-            <label for="name" class="col-sm-2 col-form-label fw-bold fs-5">{{
-                lblEmail
-                }}</label>
-            <input type="email" name="email" class="col-sm-8" placeholder="Enter Email" required formControlName="email"
-                pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$" />
-            <span *ngIf="email && email.touched && email.invalid" style="color: red; margin-left: 16%">Please Enter
-                Valid Email</span>
-        </div>
-        <div class="row mb-3">
-            <label for="name" class="col-sm-2 col-form-label fw-bold fs-5">{{
-                lblMobile
-                }}</label>
-            <input type="text" name="mobile" class="col-sm-8" placeholder="Enter Mobile" required pattern="^[0-9]+$"
-                formControlName="mobile" (keydown)="noalphabet($event)" maxlength="10" minlength="10" />
-            <span *ngIf="mobile && mobile.touched && mobile.invalid" style="color: red; margin-left: 16%">Please Enter
-                Valid Mobile no.</span>
-        </div>
+            <div class="mt-5">
+                <button class="btn btn-primary ms-5" name="submit" id="submit" (click)="showData()">
+                    {{ lblSubmit }}
+                </button>
+            </div>
+            
+        </form>
 
 
-        <div class="mt-5">
-            <button class="btn btn-primary me-5" name="submit" id="submit" (click)="showData()">
-                {{ lblSubmit }}
-            </button>
-        </div>
-    </form>
+        <p class="text-center fw-bold m-5">
+            Reactive Form Status : {{ reactiveForm.status }}
+        </p>
+    </div>
+
+    <div class="col-7">
+        <table class="table text-center table-striped">
+            <thead>
+                <tr class="bg-dark text-white">
+                    <th>ID</th>
+                    <th>{{ lblFname }}</th>
+                    <th>{{ lblLname }}</th>
+                    <th>{{ lblGender }}</th>
+                    <th>{{ lblCountry }}</th>
+                    <th>{{ lblState }}</th>
+                    <th>{{ lblCity }}</th>
+                    <th>{{ lblDate }}</th>
+                    <th>{{ lblEmail }}</th>
+                    <th>{{ lblMobile }}</th>
+
+                    <th colspan="2">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of userDatas; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ data.fname }}</td>
+                    <td>{{ data.lname }}</td>
+                    <td>{{ data.gender }}</td>
+                    <td>{{ data.address.country }}</td>
+                    <td>{{ data.address.state }}</td>
+                    <td>{{ data.address.city }}</td>
+                    <td>{{ data.date }}</td>
+                    <td>{{ data.email }}</td>
+                    <td>{{ data.mobile }}</td>
+
+                    <td>
+                        <button class="btn btn-primary" (click)="pushData(data)">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" (click)="deleteRec(i)">Delete</button>
+                    </td>
+                </tr>
+                <tr class="text-center fw-bold fs-5 pt-1" *ngIf="this.userDatas.length == 0">
+                    <td colspan="10" style="font-size: 50px; border: none">
+                        No Records Found
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-
-<p class="text-center fw-bold m-5">
-    Reactive Form Status : {{ reactiveForm.status }}
-</p>
-
-<table class="table text-center">
-    <thead>
-        <tr class="bg-dark text-white">
-            <th>ID</th>
-            <th>{{ lblFname }}</th>
-            <th>{{ lblLname }}</th>
-            <th>{{ lblGender }}</th>
-            <th>{{ lblCountry }}</th>
-            <th>{{ lblState }}</th>
-            <th>{{ lblCity }}</th>
-            <th>{{ lblEmail }}</th>
-            <th>{{ lblMobile }}</th>
-
-            <th colspan="2">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let data of userDatas; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>{{ data.fname }}</td>
-            <td>{{ data.lname }}</td>
-            <td>{{ data.gender }}</td>
-            <td>{{ data.address.country }}</td>
-            <td>{{ data.address.state }}</td>
-            <td>{{ data.address.city }}</td>
-            <td>{{ data.email }}</td>
-            <td>{{ data.mobile }}</td>
-
-            <td>
-                <button class="btn btn-primary" (click)="pushData(data)">Edit</button>
-            </td>
-            <td>
-                <button class="btn btn-danger" (click)="deleteRec(i)">Delete</button>
-            </td>
-        </tr>
-        <tr class="text-center fw-bold fs-5 pt-1" *ngIf="this.userDatas.length == 0">
-            <td colspan="10" style="font-size: 50px; border: none">
-                No Records Found
-            </td>
-        </tr>
-    </tbody>
-</table>
