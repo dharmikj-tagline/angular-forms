@@ -1,14 +1,13 @@
 export interface UserData{
-    
+    id?: number, 
     fname : string ,
     lname : string ,
     gender : string,
     address : Address,
     date : string,
-    email : string  ,
+    hobbies : string[],
     mobile : string ,
     checkbox?: boolean,
-    id?: number 
 }
 
 export interface Address{
@@ -18,9 +17,22 @@ export interface Address{
 }
 
 export interface CountryList{
+    id:number,
     name : string,
-    state : string[],
 }
+
+export interface StateList{
+    id:number,
+    name : string,
+    country : number
+}
+
+export interface CityList{
+    id:number,
+    name : string,
+    state : number
+}
+
 
 export interface StateFinds{
     name : string,
