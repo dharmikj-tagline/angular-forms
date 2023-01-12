@@ -100,7 +100,15 @@
                     Date</span>
             </div>
 
-            
+            <div class="row mb-3" >
+                <label for="hobby" class="col-3  fw-bold fs-5 ">{{lblHobbies}}</label>
+                <div *ngFor="let hobby of hobbys">
+                    <label>
+                        <input type="checkbox" formArrayName="hobbies" value="{{hobby}}" (change)="hobbySelect($event)" formArrayName="hobbies">{{hobby}}
+                    </label>
+                </div>
+            </div>
+            <!-- <p>{{reactiveForm.get('hobbies')?.value}}</p> -->
 
             <div class="row mb-3">
                 <label for="name" class="col-3 col-form-label fw-bold fs-5">{{

@@ -233,5 +233,24 @@ export class ReactiveComponent implements OnInit {
     console.log(this.cities);
   }
 
+  hobbySelect(select: any) {
+    console.log('hoobies event', select);
+    let hobbyArr = this.reactiveForm.get('hobbies') as FormArray;
+
+    if (select.target.checked) {
+      hobbyArr.push(new FormControl(select.target.value));
+      console.log('Hobbies Value : ', hobbyArr.value);
+      console.log('Hobbies length : ', hobbyArr.length);
+    } else {
+      let i = 0;
+      hobbyArr.controls.forEach((hobby: any) => {
+        console.log('hobby object value', hobby.value);
+        if (hobby.value == select.target.value) {
+          hobbyArr.removeAt(i);
+        }
+        i++;
+      });
+    }
+  }
   
 }
